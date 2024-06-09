@@ -2,6 +2,10 @@
 
 WebsNetz is a network diagnostics tool with a command-line interface that provides various network utilities such as ping, DNS lookup, port scanning, and more. This tool is written in C# and targets .NET Core, making it cross-platform and easy to distribute as a standalone executable.
 
+#Windows Install
+- [Windows Release](https://github.com/xptea/WebsNetz/releases)
+
+
 ## Features
 
 - Network Diagnostics
