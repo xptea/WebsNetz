@@ -37,5 +37,5 @@ WebsNetz is a network diagnostics tool with a command-line interface that provid
 
 1. **Clone the Repository**:
    ```sh
-   git clone https://github.com/yourusername/WebsNetz.git
+   git clone https://github.com/xptea/WebsNetz/blob/main/WebsNetz.exe
    cd WebsNetz
