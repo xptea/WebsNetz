@@ -10,7 +10,7 @@ WebsNetz is a network diagnostics tool with a command-line interface that provid
   - Trace Route
   - Get External IP Address
   - Check Internet Connection
-  - Network Speed Test
+  - Network Speed Test (Coming Soon)
   - Ping Sweep
 
 - Port Scanning
@@ -30,7 +30,7 @@ WebsNetz is a network diagnostics tool with a command-line interface that provid
 
 ### Prerequisites
 
-- [.NET Core SDK](https://dotnet.microsoft.com/download) (3.1 or later)
+- [.NET Core SDK](https://dotnet.microsoft.com/download)
 
 ### Building the Project
 
