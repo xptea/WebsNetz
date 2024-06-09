@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebsNetz.Tools
@@ -14,13 +15,32 @@ namespace WebsNetz.Tools
         {
             Console.Clear();
             Program.DisplayHeader();
+            Thread loadingThread = new Thread(ShowLoadingScreen);
+            loadingThread.Start();
+
             Task.Run(async () =>
             {
                 double downloadSpeed = await TestDownloadSpeed();
                 double uploadSpeed = await TestUploadSpeed();
+                loadingThread.Abort();
                 DisplayResults(downloadSpeed, uploadSpeed);
                 ReturnToMenu();
             }).Wait();
+        }
+
+        private static void ShowLoadingScreen()
+        {
+            string[] loadingAnimation = { "/", "-", "\\", "|" };
+            int animationIndex = 0;
+
+            Console.WriteLine("\nThis might take some time, please wait...");
+
+            while (true)
+            {
+                Console.SetCursorPosition(0, Console.CursorTop);
+                Console.Write($"Testing speed {loadingAnimation[animationIndex++ % loadingAnimation.Length]}");
+                Thread.Sleep(100);
+            }
         }
 
         private static async Task<double> TestDownloadSpeed()
@@ -30,13 +50,11 @@ namespace WebsNetz.Tools
                 using (HttpClient client = new HttpClient())
                 {
                     Stopwatch sw = new Stopwatch();
-                    Console.Write("Testing download speed: ");
                     sw.Start();
                     var data = await client.GetByteArrayAsync(TestFileUrl);
                     sw.Stop();
 
                     double speed = (data.Length * 8) / (sw.Elapsed.TotalSeconds * 1024 * 1024); // Convert to Mbps
-                    Console.WriteLine($"{Math.Round(speed, 2)} Mbps");
                     return speed;
                 }
             }
@@ -55,13 +73,11 @@ namespace WebsNetz.Tools
                 {
                     byte[] data = new byte[10485760]; // 10MB
                     Stopwatch sw = new Stopwatch();
-                    Console.Write("Testing upload speed: ");
                     sw.Start();
                     var response = await client.PostAsync(UploadTestUrl, new ByteArrayContent(data));
                     sw.Stop();
 
                     double speed = (data.Length * 8) / (sw.Elapsed.TotalSeconds * 1024 * 1024); // Convert to Mbps
-                    Console.WriteLine($"{Math.Round(speed, 2)} Mbps");
                     return speed;
                 }
             }
@@ -97,7 +113,7 @@ namespace WebsNetz.Tools
 
         private static void ReturnToMenu()
         {
-            Console.WriteLine("\nPress any key to return...");
+            Console.WriteLine("\nPress any key to return to the main menu...");
             Console.ReadKey();
         }
     }

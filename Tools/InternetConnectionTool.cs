@@ -17,17 +17,24 @@ namespace WebsNetz.Tools
 
                     if (reply.Status == IPStatus.Success)
                     {
+                        Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Internet connection is available.");
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("No internet connection available.");
                     }
                 }
             }
             catch
             {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("No internet connection available.");
+            }
+            finally
+            {
+                Console.ResetColor();
             }
 
             ReturnToMenu();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.NetworkInformation;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebsNetz.Tools
@@ -14,14 +15,50 @@ namespace WebsNetz.Tools
             string baseIp = Console.ReadLine();
 
             Console.Write("Enter starting IP (last octet): ");
-            int startIp = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out int startIp))
+            {
+                Console.WriteLine("Invalid starting IP.");
+                ReturnToMenu();
+                return;
+            }
 
             Console.Write("Enter ending IP (last octet): ");
-            int endIp = int.Parse(Console.ReadLine());
+            if (!int.TryParse(Console.ReadLine(), out int endIp))
+            {
+                Console.WriteLine("Invalid ending IP.");
+                ReturnToMenu();
+                return;
+            }
 
-            PingSweep(baseIp, startIp, endIp).Wait();
+            var cts = new CancellationTokenSource();
+            var loadingThread = new Thread(() => ShowLoadingScreen(cts.Token));
+            loadingThread.Start();
 
-            ReturnToMenu();
+            Task.Run(async () =>
+            {
+                await PingSweep(baseIp, startIp, endIp);
+                cts.Cancel(); // Stop the loading screen
+                loadingThread.Join(); // Wait for the loading thread to finish
+                ReturnToMenu();
+            }).Wait();
+        }
+
+        private static void ShowLoadingScreen(CancellationToken token)
+        {
+            string[] loadingAnimation = { "/", "-", "\\", "|" };
+            int animationIndex = 0;
+
+            Console.WriteLine("\nThis might take some time, please wait...");
+
+            while (!token.IsCancellationRequested)
+            {
+                Console.SetCursorPosition(0, Console.CursorTop);
+                Console.Write($"Pinging IPs {loadingAnimation[animationIndex++ % loadingAnimation.Length]}");
+                Thread.Sleep(100);
+            }
+
+            Console.SetCursorPosition(0, Console.CursorTop);
+            Console.Write(new string(' ', Console.WindowWidth)); // Clear the loading line
         }
 
         private static async Task PingSweep(string baseIp, int startIp, int endIp)
@@ -62,7 +99,7 @@ namespace WebsNetz.Tools
 
         private static void ReturnToMenu()
         {
-            Console.WriteLine("\nPress any key to return...");
+            Console.WriteLine("\nPress any key to return to the main menu...");
             Console.ReadKey();
         }
     }
