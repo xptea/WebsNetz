@@ -1,0 +1,11 @@
+C:\Users\buddy\source\repos\WebsNetz\bin\Debug\WebsNetz.exe.config
+C:\Users\buddy\source\repos\WebsNetz\bin\Debug\WebsNetz.exe
+C:\Users\buddy\source\repos\WebsNetz\bin\Debug\WebsNetz.pdb
+C:\Users\buddy\source\repos\WebsNetz\obj\Debug\WebsNetz.csproj.AssemblyReference.cache
+C:\Users\buddy\source\repos\WebsNetz\obj\Debug\WebsNetz.csproj.CoreCompileInputs.cache
+C:\Users\buddy\source\repos\WebsNetz\obj\Debug\WebsNetz.exe
+C:\Users\buddy\source\repos\WebsNetz\obj\Debug\WebsNetz.pdb
+C:\Users\buddy\source\repos\WebsNetz\bin\Debug\WebsNetz.exe.manifest
+C:\Users\buddy\source\repos\WebsNetz\bin\Debug\WebsNetz.application
+C:\Users\buddy\source\repos\WebsNetz\obj\Debug\WebsNetz.exe.manifest
+C:\Users\buddy\source\repos\WebsNetz\obj\Debug\WebsNetz.application
