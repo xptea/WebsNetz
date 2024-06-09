@@ -31,7 +31,6 @@ WebsNetz is a network diagnostics tool with a command-line interface that provid
 ### Prerequisites
 
 - [.NET Core SDK](https://dotnet.microsoft.com/download) (3.1 or later)
-- [Inno Setup](https://jrsoftware.org/isinfo.php) (for creating Windows installers)
 
 ### Building the Project
 
